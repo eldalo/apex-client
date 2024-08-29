@@ -1,0 +1,25 @@
+name: apex-client
+
+services:
+  mongodb:
+    image: bitnami/mongodb:6.0.13
+    container_name: mongodb_container
+    platform: linux/amd64
+    env_file:
+      - '.env'
+    environment:
+      - EXPERIMENTAL_DOCKER_DESKTOP_FORCE_QEMU=1 # This is required on Apple Silicon https://github.com/docker/for-mac/issues/6620
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data:/bitnami/mongodb
+    networks:
+      - mongodb_network
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  mongodb_network:
+    driver: bridge
